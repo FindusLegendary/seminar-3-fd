@@ -8,14 +8,16 @@ fun transform(n: Int): Int {
     else{
         s += "11"
     }
-    return s.toInt(2)
+    var r = s.toInt(2)
+    return r
 }
 
 fun maxNBelow(limit: Int): Int {
     var answer = 0
-    for (i in 1<..<1000){
+    for (i in 1..1000){
         if (transform(i) < limit){
             answer = i
         }
     }
+    return answer
 }
