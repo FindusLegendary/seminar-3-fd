@@ -7,12 +7,5 @@ import seminar.task03.TravelCard
 
 fun main() {
     println("Здесь можно вызывать функции и классы из заданий.")
-
-    // Раскомментируйте нужный вызов после реализации функции.
-    // println(transformTask01(129))
-    // println(transformTask02(131))
-
-    // val card = TravelCard(2)
-    // println(card.ride())
-    // println(card.remainingTrips)
+    print(transformTask01(21))
 }

@@ -1,13 +1,12 @@
 package seminar.task01
 
 fun transform(n: Int): Int {
-    N = n.toString(2)
-    TODO("Преобразуйте двоичную запись числа")
-    if (N%2 == 0){
-        N += "00"
+    var s = n.toString(2)
+    if (n%2 == 0){
+        s += "00"
     }
     else{
-        N += "11"
+        s += "11"
     }
     return s.toInt(2)
 }
