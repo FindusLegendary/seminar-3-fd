@@ -8,10 +8,10 @@ enum class Genre(val label: String) {
 
 object LibraryRules {
     fun loanDays(genre: Genre): Int {
-        when(genre) {
-            Genre.FANTASY -> return 21
-            Genre.ADVENTURE -> return 14
-            Genre.SCIENCE -> return 7
+        return when(genre) {
+            Genre.FANTASY -> 21
+            Genre.ADVENTURE -> 14
+            Genre.SCIENCE -> 7
         }
     }
 }
@@ -46,6 +46,9 @@ class Book(
         }
         return false
     }
+    fun info(): BookInfo {
+        return BookInfo(title, author, genre)
+    }
 }
 data class BookInfo(
     val title: String,
@@ -56,9 +59,7 @@ data class BookInfo(
         require(title.isNotBlank())
         require(author.isNotBlank())
     }
-    fun info(): BookInfo {
-        return BookInfo(title, author, genre)
-    }
+
 }
 interface Notifier {
     fun send(message: String)
@@ -92,7 +93,7 @@ class Library(private val books: Array<Book>, private val notifier: Notifier) {
             if (book.id == id) {
                 val isBorrowed = book.borrow()
                 if (isBorrowed) {
-                    println("Выдана книга ${book.title}")
+                    notifier.send("Выдана книга ${book.title}")
                 }
                 return isBorrowed
             }
@@ -105,7 +106,7 @@ class Library(private val books: Array<Book>, private val notifier: Notifier) {
             if (book.id == id) {
                 val Return = book.returnToLibrary()
                 if (Return) {
-                    println("Возвращена книга: ${book.title}")
+                    notifier.send("Возвращена книга: ${book.title}")
                 }
                 return Return
             }
@@ -126,7 +127,7 @@ class Library(private val books: Array<Book>, private val notifier: Notifier) {
     fun countByGenre(genre: Genre): Int {
         var count = 0
         for (book in books) {
-            if (book.isAvailable and (genre == book.genre)) {
+            if (genre == book.genre) {
                 count++
             }
         }
@@ -138,9 +139,11 @@ class Library(private val books: Array<Book>, private val notifier: Notifier) {
         var res = ""
         for (book in books) {
             val st = if (book.isAvailable) "доступна" else "выдана"
-            val r = "${book.id}. ${book.title} - ${book.author}: ${st}\n"
-            if (r.isNotEmpty()) res += r
-            else res += "\n$r"
+            val r = "${book.id}. ${book.title} - ${book.author}: ${st}"
+            if (res.isNotEmpty()) {
+                res += "\n"
+            }
+            res += r
         }
         return res
     }
