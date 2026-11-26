@@ -93,7 +93,7 @@ class Library(private val books: Array<Book>, private val notifier: Notifier) {
             if (book.id == id) {
                 val isBorrowed = book.borrow()
                 if (isBorrowed) {
-                    notifier.send("Выдана книга ${book.title}")
+                    notifier.send("Выдана книга: ${book.title}")
                 }
                 return isBorrowed
             }
@@ -139,7 +139,7 @@ class Library(private val books: Array<Book>, private val notifier: Notifier) {
         var res = ""
         for (book in books) {
             val st = if (book.isAvailable) "доступна" else "выдана"
-            val r = "${book.id}. ${book.title} - ${book.author}: ${st}"
+            val r = "${book.id}. ${book.title} — ${book.author}: ${st}"
             if (res.isNotEmpty()) {
                 res += "\n"
             }
